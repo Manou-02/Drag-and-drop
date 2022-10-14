@@ -19,15 +19,11 @@
     const newList = ref([]);
 
     function startDrag(event, item){
-        event.dataTransfer.dropEffect = 'move';
-        event.dataTransfer.effectAllowed = "move";
 
         event.dataTransfer.setData("itemId", item.id);
     }
 
     function onDrop(event){
-        // const itemId = event.dataTransfer.getData('itemId');
-        // const item = list.value.find(item => item.id === itemId);
         const id = event.dataTransfer.getData('itemId');
         for(let i = 0; i < list.value.length; i++){
             if(list.value[i].id === +event.dataTransfer.getData('itemId')){
@@ -90,6 +86,7 @@
     .drag-item{
         background-color: white;
         padding: 10px;
+        cursor: pointer;
     }
     .drop-container{
         background-color: rgb(208, 209, 209);
