@@ -16,6 +16,8 @@
         },
     ]);
 
+    const newList = ref([]);
+
     function startDrag(event, item){
         event.dataTransfer.dropEffect = 'move';
         event.dataTransfer.effectAllowed = "move";
@@ -26,7 +28,12 @@
     function onDrop(event){
         // const itemId = event.dataTransfer.getData('itemId');
         // const item = list.value.find(item => item.id === itemId);
-        console.log("event\n", event);  
+        const id = event.dataTransfer.getData('itemId');
+        for(let i = 0; i < list.value.length; i++){
+            if(list.value[i].id === +event.dataTransfer.getData('itemId')){
+                newList.value = [...newList.value, list.value[i]]
+            }
+        }
     }
 </script>
 
@@ -51,7 +58,15 @@
             @dragenter.prevent
             @dragover.prevent
         >
-        
+            <div 
+                class="drag-item" 
+                draggable="true" 
+                v-for="item in newList" 
+                :key="item.id"
+                @dragstart="startDrag($event, item)"
+            >
+                {{item.name}}
+            </div>
         </div>
     </div>
 </template>
